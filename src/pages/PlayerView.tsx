@@ -23,6 +23,7 @@ import { useLastNonPlayerLink } from "@/stores/history";
 import { PlayerMeta, playerStatus } from "@/stores/player/slices/source";
 import { needsOnboarding } from "@/utils/onboarding";
 import { parseTimestamp } from "@/utils/timestamp";
+import { getSeasonAndEpisodeByTmdbId } from "@/utils/tmdb";
 
 export function RealPlayerView() {
   const navigate = useNavigate();
@@ -52,17 +53,26 @@ export function RealPlayerView() {
     season: params.season,
     episode: params.episode,
   });
+
   useEffect(() => {
     reset();
   }, [paramsData, reset]);
 
-  const metaChange = useCallback(
+  // Bu işlev, TMDB ID'sini sezon ve bölüm numarasına dönüştürecek
+  const updateUrlWithSeasonAndEpisode = useCallback(
     (meta: PlayerMeta) => {
-      if (meta?.type === "show")
-        navigate(
-          `/media/${params.media}/${meta.season?.tmdbId}/${meta.episode?.tmdbId}`,
-        );
-      else navigate(`/media/${params.media}`);
+      if (meta?.type === "show") {
+        const seasonNumber = meta.season?.seasonNumber; // Burada seasonNumber kullanabilirsiniz
+        const episodeNumber = meta.episode?.episodeNumber; // Burada episodeNumber kullanabilirsiniz
+
+        if (seasonNumber && episodeNumber) {
+          navigate(`/media/${params.media}/${seasonNumber}/${episodeNumber}`);
+        } else {
+          navigate(`/media/${params.media}`);
+        }
+      } else {
+        navigate(`/media/${params.media}`);
+      }
     },
     [navigate, params],
   );
@@ -91,7 +101,7 @@ export function RealPlayerView() {
   );
 
   return (
-    <PlayerPart backUrl={backUrl} onMetaChange={metaChange}>
+    <PlayerPart backUrl={backUrl} onMetaChange={updateUrlWithSeasonAndEpisode}>
       {status === playerStatus.IDLE ? (
         <MetaPart onGetMeta={setPlayerMeta} />
       ) : null}
