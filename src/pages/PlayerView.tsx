@@ -47,34 +47,34 @@ export function RealPlayerView() {
   } = usePlayer();
   const { setPlayerMeta, scrapeMedia } = usePlayerMeta();
   const backUrl = useLastNonPlayerLink();
-
-  const paramsData = JSON.stringify({
-    media: params.media,
-    season: params.season,
-    episode: params.episode,
-  });
+  const [seasonAndEpisode, setSeasonAndEpisode] = useState<{ season: number; episode: number } | null>(null);
 
   useEffect(() => {
     reset();
-  }, [paramsData, reset]);
+  }, [params, reset]);
 
-  // Bu işlev, TMDB ID'sini sezon ve bölüm numarasına dönüştürecek
-  const updateUrlWithSeasonAndEpisode = useCallback(
+  useEffect(() => {
+    const fetchSeasonAndEpisode = async () => {
+      if (params.media) {
+        const data = await getSeasonAndEpisodeByTmdbId(params.media);
+        setSeasonAndEpisode(data);
+      }
+    };
+    fetchSeasonAndEpisode();
+  }, [params.media]);
+
+  const metaChange = useCallback(
     (meta: PlayerMeta) => {
       if (meta?.type === "show") {
-        const seasonNumber = meta.season?.seasonNumber; // Burada seasonNumber kullanabilirsiniz
-        const episodeNumber = meta.episode?.episodeNumber; // Burada episodeNumber kullanabilirsiniz
+        const season = seasonAndEpisode?.season || 1; // Varsayılan olarak ilk sezon
+        const episode = seasonAndEpisode?.episode || 1; // Varsayılan olarak ilk bölüm
 
-        if (seasonNumber && episodeNumber) {
-          navigate(`/media/${params.media}/${seasonNumber}/${episodeNumber}`);
-        } else {
-          navigate(`/media/${params.media}`);
-        }
+        navigate(`/media/${params.media}/${season}/${episode}`);
       } else {
         navigate(`/media/${params.media}`);
       }
     },
-    [navigate, params],
+    [navigate, params.media, seasonAndEpisode],
   );
 
   const playAfterScrape = useCallback(
@@ -101,7 +101,7 @@ export function RealPlayerView() {
   );
 
   return (
-    <PlayerPart backUrl={backUrl} onMetaChange={updateUrlWithSeasonAndEpisode}>
+    <PlayerPart backUrl={backUrl} onMetaChange={metaChange}>
       {status === playerStatus.IDLE ? (
         <MetaPart onGetMeta={setPlayerMeta} />
       ) : null}
