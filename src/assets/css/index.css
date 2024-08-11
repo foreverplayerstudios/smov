@@ -236,3 +236,16 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
 .hidden.sm\:flex.items-center.justify-end {
   display: none !important;
 }
+
+.flex.items-center > a.py-1.-my-1.px-2.-mx-2 {
+  display: none !important;
+}
+
+.text-base > svg {
+  display: none !important;
+}
+
+.text.mx-3.text-type-secondary {
+  display: none !important;
+}
+
