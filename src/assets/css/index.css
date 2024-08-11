@@ -249,3 +249,7 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   display: none !important;
 }
 
+/* Bu div'i gizle */
+.pointer-events-auto.pl-\[calc\(2rem\+env\(safe-area-inset-left\)\)\].pr-\[calc\(2rem\+env\(safe-area-inset-right\)\)\].pt-6.absolute.top-0.w-full {
+  display: none !important;
+}
