@@ -253,3 +253,6 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   display: none !important;
 }
 
+.pb-3.gap-3.flex {
+  display: none !important;
+}
