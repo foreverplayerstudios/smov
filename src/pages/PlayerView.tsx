@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { useAsync } from "react-use";
+import axios from 'axios';
 
 import { usePlayer } from "@/components/player/hooks/usePlayer";
 import { usePlayerMeta } from "@/components/player/hooks/usePlayerMeta";
@@ -23,7 +24,28 @@ import { useLastNonPlayerLink } from "@/stores/history";
 import { PlayerMeta, playerStatus } from "@/stores/player/slices/source";
 import { needsOnboarding } from "@/utils/onboarding";
 import { parseTimestamp } from "@/utils/timestamp";
-import { getSeasonAndEpisodeByTmdbId } from "@/utils/tmdb";
+
+const TMDB_API_KEY = '9ef876e181780c5fa05b91d3706ab166';
+const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
+
+async function getSeasonAndEpisodeByTmdbId(tmdbId: string): Promise<{ season: number; episode: number } | null> {
+  try {
+    const response = await axios.get(`${TMDB_API_BASE_URL}/tv/${tmdbId}?api_key=${TMDB_API_KEY}&language=en-US`);
+    const data = response.data;
+
+    if (data.seasons && data.seasons.length > 0) {
+      const firstSeason = data.seasons[0];
+      return {
+        season: firstSeason.season_number,
+        episode: 1, // Varsayılan olarak ilk bölümü 1 olarak alıyoruz; uygun şekilde değiştirin
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching season and episode data:', error);
+    return null;
+  }
+}
 
 export function RealPlayerView() {
   const navigate = useNavigate();
