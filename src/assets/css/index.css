@@ -256,3 +256,7 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
 .pb-3.gap-3.flex {
   display: none !important;
 }
+
+.flex.gap-3 {
+  display: none !important;
+}
