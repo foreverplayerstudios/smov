@@ -233,9 +233,6 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 
-.hidden.sm\:flex.items-center.justify-end {
-  display: none !important;
-}
 
 .flex.items-center > a.py-1.-my-1.px-2.-mx-2 {
   display: none !important;
