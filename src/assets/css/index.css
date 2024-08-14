@@ -215,6 +215,11 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   width: 13px;
 }
 
+
+.hidden.sm\:flex.items-center.justify-end {
+  display: none !important;
+}
+
 .grecaptcha-badge {
   display: none !important;
 }
