@@ -267,6 +267,7 @@ button.cursor-pointer.inline-flex.items-center.justify-center.rounded-lg.font-me
   display: none !important;
 }
 
-#overlayRouter::episodes {
+button.tabbable {
   display: none !important;
 }
+
