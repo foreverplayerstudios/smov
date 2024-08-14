@@ -255,6 +255,9 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   display: none !important;
 }
 
+.pb-3.gap-3.flex {
+  display: none !important;
+}
 
 .tabbable.cursor-pointer.inline-flex.items-center.justify-center.rounded-lg.font-medium.transition-\[transform\,background-color\].duration-100.active\:scale-105.md\:px-8.md\:px-12.p-2\.5.mt-6.bg-buttons-cancel.hover\:bg-buttons-cancelHover.transition-colors.duration-100.text-white,
 .tabbable.cursor-pointer.inline-flex.items-center.justify-center.rounded-lg.font-medium.transition-\[transform\,background-color\].duration-100.active\:scale-105.md\:px-8.md\:px-12.p-2\.5.mt-6.bg-buttons-purple.hover\:bg-buttons-purpleHover.text-white {
