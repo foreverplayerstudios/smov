@@ -101,7 +101,6 @@ export function PlayerPart(props: PlayerPartProps) {
             ) : null}
           </Player.LeftSideControls>
           <div className="flex items-center space-x-3">
-            <Player.Episodes />
             {status === playerStatus.PLAYING ? (
               <>
                 <Player.Pip />
@@ -123,7 +122,6 @@ export function PlayerPart(props: PlayerPartProps) {
           <div />
           <div className="flex justify-center space-x-3">
             {status === playerStatus.PLAYING ? <Player.Pip /> : null}
-            <Player.Episodes />
             {status === playerStatus.PLAYING ? <Player.Settings /> : null}
           </div>
           <div>
